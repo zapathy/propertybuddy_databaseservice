@@ -5,6 +5,8 @@ import com.propertybuddy.service.database.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PropertyService {
 
@@ -18,4 +20,6 @@ public class PropertyService {
     public void deleteAll() {
         repository.deleteAll();
     }
+
+    public List<Property> getAll() {return repository.findAll();}
 }

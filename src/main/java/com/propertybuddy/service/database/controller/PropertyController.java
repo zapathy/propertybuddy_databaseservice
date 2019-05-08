@@ -1,14 +1,15 @@
 package com.propertybuddy.service.database.controller;
 
+import com.propertybuddy.service.database.model.MessageObject;
+import com.propertybuddy.service.database.model.Property;
 import com.propertybuddy.service.database.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/properties")
@@ -18,9 +19,13 @@ public class PropertyController {
     PropertyService propertyService;
 
     @DeleteMapping("")
-    public ResponseEntity<String> deleteEverything() {
+    public ResponseEntity<MessageObject> deleteEverything() {
         propertyService.deleteAll();
-        return new ResponseEntity<>("Empty Property database successful", new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(new MessageObject("Empty Property database successful"), new HttpHeaders(), HttpStatus.OK);
     }
 
+    @GetMapping("")
+    public ResponseEntity<List<Property>> returnEverything() {
+        return new ResponseEntity<>(propertyService.getAll(), new HttpHeaders(), HttpStatus.OK);
+    }
 }
