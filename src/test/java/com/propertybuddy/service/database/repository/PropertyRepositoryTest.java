@@ -29,7 +29,7 @@ public class PropertyRepositoryTest {
         Price p1 = Price.builder().price(new BigDecimal(20000)).date(LocalDate.of(2018,6,13)).build();
         Price p2 = Price.builder().price(new BigDecimal(25000)).date(LocalDate.of(2018,7,21)).build();
         Price p3 = Price.builder().price(new BigDecimal(29000)).date(LocalDate.of(2019,1,5)).build();
-        Property a = Property.builder().district(9).street("Mester utca").priceHistory(Arrays.asList(p1,p2,p3)).build();
+        Property a = Property.builder().district(9).priceHistory(Arrays.asList(p1,p2,p3)).build();
         propertyRepository.save(a);
         assertEquals(1, propertyRepository.findAll().size());
         propertyRepository.delete(a);

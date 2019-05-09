@@ -29,46 +29,44 @@ public class TestDataController {
     @PostMapping("/createall")
     public ResponseEntity<MessageObject> createTestData() {
         propertyService.deleteAll();
-        propertyService.add(
-                Property.builder()
-                        .district(9)
-                        .street("Mester utca")
-                        .priceHistory(Arrays.asList(
-                                Price.builder()
-                                        .date(LocalDate.of(2018,6,13))
-                                        .price(new BigDecimal(25000))
-                                        .build(),
-                                Price.builder()
-                                        .date(LocalDate.of(2018,9,21))
-                                        .price(new BigDecimal(29000))
-                                        .build(),
-                                Price.builder()
-                                        .date(LocalDate.of(2019,1,5))
-                                        .price(new BigDecimal(31500))
-                                        .build()
-                        ))
-                        .build()
-        );
-        propertyService.add(
-                Property.builder()
-                        .district(7)
-                        .street("Erzsébet körút")
-                        .priceHistory(Arrays.asList(
-                                Price.builder()
-                                        .date(LocalDate.of(2018,6,13))
-                                        .price(new BigDecimal(50000))
-                                        .build(),
-                                Price.builder()
-                                        .date(LocalDate.of(2018,9,21))
-                                        .price(new BigDecimal(55000))
-                                        .build(),
-                                Price.builder()
-                                        .date(LocalDate.of(2019,1,5))
-                                        .price(new BigDecimal(54000))
-                                        .build()
-                        ))
-                        .build()
-        );
+//        propertyService.add(
+//                Property.builder()
+//                        .district(9)
+//                        .priceHistory(Arrays.asList(
+//                                Price.builder()
+//                                        .date(LocalDate.of(2018,6,13))
+//                                        .price(new BigDecimal(25000))
+//                                        .build(),
+//                                Price.builder()
+//                                        .date(LocalDate.of(2018,9,21))
+//                                        .price(new BigDecimal(29000))
+//                                        .build(),
+//                                Price.builder()
+//                                        .date(LocalDate.of(2019,1,5))
+//                                        .price(new BigDecimal(31500))
+//                                        .build()
+//                        ))
+//                        .build()
+//        );
+//        propertyService.add(
+//                Property.builder()
+//                        .district(7)
+//                        .priceHistory(Arrays.asList(
+//                                Price.builder()
+//                                        .date(LocalDate.of(2018,6,13))
+//                                        .price(new BigDecimal(50000))
+//                                        .build(),
+//                                Price.builder()
+//                                        .date(LocalDate.of(2018,9,21))
+//                                        .price(new BigDecimal(55000))
+//                                        .build(),
+//                                Price.builder()
+//                                        .date(LocalDate.of(2019,1,5))
+//                                        .price(new BigDecimal(54000))
+//                                        .build()
+//                        ))
+//                        .build()
+//        );
 
         return new ResponseEntity<>(new MessageObject("Added test data"), new HttpHeaders(), HttpStatus.OK);
     }
