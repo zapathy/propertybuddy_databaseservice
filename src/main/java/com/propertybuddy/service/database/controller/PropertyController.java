@@ -11,12 +11,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestController
 @RequestMapping("/properties")
 @CrossOrigin
 public class PropertyController {
     @Autowired
     PropertyService propertyService;
+
+    Logger logger = LoggerFactory.getLogger(PropertyController.class);
 
     @DeleteMapping("")
     public ResponseEntity<MessageObject> deleteEverything() {
@@ -31,6 +36,7 @@ public class PropertyController {
 
     @PostMapping("")
     public ResponseEntity<MessageObject> addProperty(@RequestBody Property newProperty) {
+        logger.info(newProperty.toString());
         propertyService.add(newProperty);
         return new ResponseEntity<>(new MessageObject("Added property successful"), new HttpHeaders(), HttpStatus.OK);
     }
