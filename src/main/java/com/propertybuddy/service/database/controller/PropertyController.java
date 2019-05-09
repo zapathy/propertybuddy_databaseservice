@@ -28,4 +28,10 @@ public class PropertyController {
     public ResponseEntity<List<Property>> returnEverything() {
         return new ResponseEntity<>(propertyService.getAll(), new HttpHeaders(), HttpStatus.OK);
     }
+
+    @PostMapping("")
+    public ResponseEntity<MessageObject> addProperty(@RequestBody Property newProperty) {
+        propertyService.add(newProperty);
+        return new ResponseEntity<>(new MessageObject("Added property successful"), new HttpHeaders(), HttpStatus.OK);
+    }
 }
