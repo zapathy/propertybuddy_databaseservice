@@ -21,7 +21,7 @@ public class PropertyController {
     @Autowired
     PropertyService propertyService;
 
-    Logger logger = LoggerFactory.getLogger(PropertyController.class);
+    private Logger logger = LoggerFactory.getLogger(PropertyController.class);
 
     @DeleteMapping("")
     public ResponseEntity<MessageObject> deleteEverything() {
