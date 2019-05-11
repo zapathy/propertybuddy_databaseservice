@@ -39,7 +39,7 @@ public class PropertyController {
         int propertyInDb = propertyService.isPropertyInDb(newProperty);
         if (propertyInDb == 1) {
             Property oldProperty = propertyService.getAllByExample(newProperty).get(0);
-            List<Price> priceHistory = oldProperty.getPriceHistory();
+            List<Price> priceHistory = oldProperty.getPricehistory();
             boolean alreadyHaveRecentData = false;
             for (Price p : priceHistory) {
                 Long d = Math.abs(Duration.between(p.getDatetime(), newPrice.getDatetime()).toMinutes());
@@ -57,7 +57,7 @@ public class PropertyController {
             }
 
         } else if (propertyInDb == 0) {
-            newProperty.getPriceHistory().add(newPrice);
+            newProperty.getPricehistory().add(newPrice);
             propertyService.save(newProperty);
             return new ResponseEntity<>(new MessageObject("Added property successful"),
                     new HttpHeaders(), HttpStatus.CREATED);

@@ -32,7 +32,7 @@ public class TestDataController {
 //        propertyService.save(
 //                Property.builder()
 //                        .district(9)
-//                        .priceHistory(Arrays.asList(
+//                        .pricehistory(Arrays.asList(
 //                                Price.builder()
 //                                        .date(LocalDate.of(2018,6,13))
 //                                        .price(new BigDecimal(25000))
@@ -51,7 +51,7 @@ public class TestDataController {
 //        propertyService.save(
 //                Property.builder()
 //                        .district(7)
-//                        .priceHistory(Arrays.asList(
+//                        .pricehistory(Arrays.asList(
 //                                Price.builder()
 //                                        .date(LocalDate.of(2018,6,13))
 //                                        .price(new BigDecimal(50000))

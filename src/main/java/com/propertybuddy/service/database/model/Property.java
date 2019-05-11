@@ -45,6 +45,6 @@ public class Property {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Price> priceHistory = new ArrayList<>();
+    private List<Price> pricehistory = new ArrayList<>();
 
 }
