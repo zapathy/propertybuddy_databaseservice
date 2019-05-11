@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.List;
 
 @RestController
@@ -39,12 +40,13 @@ public class PropertyController {
         if (propertyInDb == 1) {
             Property oldProperty = propertyService.getAllByExample(newProperty).get(0);
             List<Price> priceHistory = oldProperty.getPriceHistory();
-            boolean dateAlreadyIn = false;
+            boolean alreadyHaveRecentData = false;
             for (Price p : priceHistory) {
-                if (p.getDate().equals(newPrice.getDate())) dateAlreadyIn = true;
+                Long d = Math.abs(Duration.between(p.getDateTime(), newPrice.getDateTime()).toMinutes());
+                if (d <= 30) alreadyHaveRecentData = true;
                 break;
             }
-            if (!dateAlreadyIn) {
+            if (!alreadyHaveRecentData) {
                 priceHistory.add(newPrice);
                 propertyService.save(oldProperty);
                 return new ResponseEntity<>(new MessageObject("Added price to exsiting property"),

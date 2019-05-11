@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigInteger;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +20,7 @@ public class Price {
     public Price(PropertyInput input) {
         this.pricehuf = input.getPricehuf();
         this.priceeur = input.getPriceeur();
-        this.date = LocalDate.now();
+        this.dateTime = LocalDateTime.now();
     }
 
     @Id
@@ -30,5 +30,5 @@ public class Price {
     private BigInteger pricehuf;
     private BigInteger priceeur;
 
-    private LocalDate date;
+    private LocalDateTime dateTime;
 }
