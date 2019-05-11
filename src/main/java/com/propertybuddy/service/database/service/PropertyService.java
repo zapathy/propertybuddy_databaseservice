@@ -3,6 +3,7 @@ package com.propertybuddy.service.database.service;
 import com.propertybuddy.service.database.model.Property;
 import com.propertybuddy.service.database.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class PropertyService {
     @Autowired
     PropertyRepository repository;
 
-    public void add(Property p) {
+    public void save(Property p) {
         repository.save(p);
     }
 
@@ -21,5 +22,18 @@ public class PropertyService {
         repository.deleteAll();
     }
 
-    public List<Property> getAll() {return repository.findAll();}
+    public List<Property> getAll() {
+        return repository.findAll();
+    }
+
+    public int isPropertyInDb(Property p) {
+        List<Property> properties = repository.findAll(Example.of(p));
+        if (properties.size() == 0) return 0;
+        else if (properties.size() == 1) return 1;
+        else return 2;
+    }
+
+    public List<Property> getAllByExample(Property p) {
+        return repository.findAll(Example.of(p));
+    }
 }

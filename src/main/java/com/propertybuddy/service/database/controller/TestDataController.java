@@ -29,7 +29,7 @@ public class TestDataController {
     @PostMapping("/createall")
     public ResponseEntity<MessageObject> createTestData() {
         propertyService.deleteAll();
-//        propertyService.add(
+//        propertyService.save(
 //                Property.builder()
 //                        .district(9)
 //                        .priceHistory(Arrays.asList(
@@ -48,7 +48,7 @@ public class TestDataController {
 //                        ))
 //                        .build()
 //        );
-//        propertyService.add(
+//        propertyService.save(
 //                Property.builder()
 //                        .district(7)
 //                        .priceHistory(Arrays.asList(
