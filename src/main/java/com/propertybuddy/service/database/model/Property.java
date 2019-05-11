@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,6 +15,17 @@ import java.util.List;
 @Entity
 @Builder
 public class Property {
+    public Property(PropertyInput input) {
+        this.name = input.getName();
+        this.district = input.getDistrict();
+        this.bedrooms = input.getBedrooms();
+        this.size = input.getSize();
+        this.floor = input.getFloor();
+        this.garage = input.getGarage();
+        this.view = input.getView();
+        this.streetsuffix = input.getStreetsuffix();
+        this.streetname = input.getStreetname();
+    }
 
     @Id
     @GeneratedValue
@@ -26,13 +37,7 @@ public class Property {
     private Integer size;
     private String floor;
     private Boolean garage;
-    private Boolean parkingplace;
     private String view;
-    private Boolean furnished;
-    private Boolean elevator;
-    private Boolean airconditioned;
-    private BigInteger pricehuf;
-    private BigInteger priceeur;
     private String streetsuffix;
     private String streetname;
 
@@ -40,6 +45,6 @@ public class Property {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Price> priceHistory;
+    private List<Price> priceHistory = new ArrayList<>();
 
 }
