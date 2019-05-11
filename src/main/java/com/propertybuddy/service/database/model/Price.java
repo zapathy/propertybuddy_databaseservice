@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 
 @Data
@@ -17,12 +17,18 @@ import java.time.LocalDate;
 @Entity
 @Builder
 public class Price {
+    public Price(PropertyInput input) {
+        this.pricehuf = input.getPricehuf();
+        this.priceeur = input.getPriceeur();
+        this.date = LocalDate.now();
+    }
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private BigDecimal price;
+    private BigInteger pricehuf;
+    private BigInteger priceeur;
 
     private LocalDate date;
 }
