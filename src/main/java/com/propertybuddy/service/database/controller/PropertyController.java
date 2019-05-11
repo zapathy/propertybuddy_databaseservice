@@ -42,7 +42,7 @@ public class PropertyController {
             List<Price> priceHistory = oldProperty.getPriceHistory();
             boolean alreadyHaveRecentData = false;
             for (Price p : priceHistory) {
-                Long d = Math.abs(Duration.between(p.getDateTime(), newPrice.getDateTime()).toMinutes());
+                Long d = Math.abs(Duration.between(p.getDatetime(), newPrice.getDatetime()).toMinutes());
                 if (d <= 30) alreadyHaveRecentData = true;
                 break;
             }

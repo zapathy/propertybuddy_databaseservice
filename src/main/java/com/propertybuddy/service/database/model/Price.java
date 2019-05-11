@@ -20,7 +20,7 @@ public class Price {
     public Price(PropertyInput input) {
         this.pricehuf = input.getPricehuf();
         this.priceeur = input.getPriceeur();
-        this.dateTime = LocalDateTime.now();
+        this.datetime = LocalDateTime.now();
     }
 
     @Id
@@ -30,5 +30,5 @@ public class Price {
     private BigInteger pricehuf;
     private BigInteger priceeur;
 
-    private LocalDateTime dateTime;
+    private LocalDateTime datetime;
 }
