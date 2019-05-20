@@ -43,7 +43,8 @@ public class Property {
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     private List<Price> pricehistory = new ArrayList<>();
 
