@@ -32,7 +32,11 @@ public class PropertyService {
         List<Property> properties = repository.findAll(Example.of(p));
         if (properties.size() == 0) return 0;
         else if (properties.size() == 1) return 1;
-        else return 2;
+        else {
+            System.out.println("all found properties:");
+            System.out.println(properties);
+            return 2;
+        }
     }
 
     public Price getLatestPrice(Property property) {
@@ -41,7 +45,8 @@ public class PropertyService {
         properties.forEach(o -> {
             o.getPricehistory().sort(Comparator.comparing(Price::getDatetime));
         });
-        return null;
+        System.out.println(properties);
+        return properties.get(0).getPricehistory().get(0);
     }
 
     public List<Property> getAllByExample(Property p) {

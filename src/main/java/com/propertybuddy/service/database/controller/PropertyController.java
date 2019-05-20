@@ -76,6 +76,7 @@ public class PropertyController {
             return new ResponseEntity<>(null,
                     new HttpHeaders(), HttpStatus.NOT_FOUND);
         else if (propertyInDb > 0){
+            System.out.println("latest price is:");
             System.out.println(propertyService.getLatestPrice(p));
             return new ResponseEntity<>(propertyService.getAllByExample(p),
                     new HttpHeaders(), HttpStatus.OK);
