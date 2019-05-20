@@ -8,14 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/testdata")
@@ -26,49 +24,21 @@ public class TestDataController {
     PropertyService propertyService;
 
     @CrossOrigin
-    @PostMapping("/createall")
-    public ResponseEntity<MessageObject> createTestData() {
-        propertyService.deleteAll();
-//        propertyService.save(
-//                Property.builder()
-//                        .district(9)
-//                        .pricehistory(Arrays.asList(
-//                                Price.builder()
-//                                        .date(LocalDate.of(2018,6,13))
-//                                        .price(new BigDecimal(25000))
-//                                        .build(),
-//                                Price.builder()
-//                                        .date(LocalDate.of(2018,9,21))
-//                                        .price(new BigDecimal(29000))
-//                                        .build(),
-//                                Price.builder()
-//                                        .date(LocalDate.of(2019,1,5))
-//                                        .price(new BigDecimal(31500))
-//                                        .build()
-//                        ))
-//                        .build()
-//        );
-//        propertyService.save(
-//                Property.builder()
-//                        .district(7)
-//                        .pricehistory(Arrays.asList(
-//                                Price.builder()
-//                                        .date(LocalDate.of(2018,6,13))
-//                                        .price(new BigDecimal(50000))
-//                                        .build(),
-//                                Price.builder()
-//                                        .date(LocalDate.of(2018,9,21))
-//                                        .price(new BigDecimal(55000))
-//                                        .build(),
-//                                Price.builder()
-//                                        .date(LocalDate.of(2019,1,5))
-//                                        .price(new BigDecimal(54000))
-//                                        .build()
-//                        ))
-//                        .build()
-//        );
+    @GetMapping("/getlatest")
+    public ResponseEntity<List<Property>> getLatest(@RequestBody Property p) {
+        int propertyInDb = propertyService.isPropertyInDb(p);
+        if (propertyInDb == 0)
+            return new ResponseEntity<>(null,
+                    new HttpHeaders(), HttpStatus.NOT_FOUND);
+        else if (propertyInDb > 0){
+            System.out.println(propertyService.getLatestPrice(p));
+            return new ResponseEntity<>(propertyService.getAllByExample(p),
+                    new HttpHeaders(), HttpStatus.OK);
+        }
 
-        return new ResponseEntity<>(new MessageObject("Added test data"), new HttpHeaders(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(null,
+                    new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
