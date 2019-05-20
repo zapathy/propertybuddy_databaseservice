@@ -1,11 +1,13 @@
 package com.propertybuddy.service.database.service;
 
+import com.propertybuddy.service.database.model.Price;
 import com.propertybuddy.service.database.model.Property;
 import com.propertybuddy.service.database.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -31,6 +33,15 @@ public class PropertyService {
         if (properties.size() == 0) return 0;
         else if (properties.size() == 1) return 1;
         else return 2;
+    }
+
+    public Price getLatestPrice(Property property) {
+        List<Property> properties = getAllByExample(property);
+        System.out.println(properties);
+        properties.forEach(o -> {
+            o.getPricehistory().sort(Comparator.comparing(Price::getDatetime));
+        });
+        return null;
     }
 
     public List<Property> getAllByExample(Property p) {

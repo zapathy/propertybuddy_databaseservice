@@ -75,9 +75,12 @@ public class PropertyController {
         if (propertyInDb == 0)
             return new ResponseEntity<>(null,
                     new HttpHeaders(), HttpStatus.NOT_FOUND);
-        else if (propertyInDb > 0)
+        else if (propertyInDb > 0){
+            System.out.println(propertyService.getLatestPrice(p));
             return new ResponseEntity<>(propertyService.getAllByExample(p),
                     new HttpHeaders(), HttpStatus.OK);
+        }
+
         else
             return new ResponseEntity<>(null,
                     new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
