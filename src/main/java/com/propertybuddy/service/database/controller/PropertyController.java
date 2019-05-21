@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -39,21 +40,23 @@ public class PropertyController {
         int propertyInDb = propertyService.isPropertyInDb(newProperty);
         if (propertyInDb == 1) {
             Property oldProperty = propertyService.getAllByExample(newProperty).get(0);
-            List<Price> priceHistory = oldProperty.getPricehistory();
-            boolean alreadyHaveRecentData = false;
-            for (Price p : priceHistory) {
-                Long d = Math.abs(Duration.between(p.getDatetime(), newPrice.getDatetime()).toMinutes());
-                if (d <= 30) alreadyHaveRecentData = true;
-                break;
-            }
-            if (!alreadyHaveRecentData) {
-                priceHistory.add(newPrice);
+            Price latestPrice = propertyService.getLatestPrice(oldProperty);
+            long deltaTime = Math.abs(Duration.between(latestPrice.getDatetime(), LocalDateTime.now()).toHours());
+            if (deltaTime <= 48) {
+                if (!latestPrice.getPricehuf().equals(newPrice.getPricehuf())) {
+                    oldProperty.getPricehistory().add(newPrice);
+                    propertyService.save(oldProperty);
+                    return new ResponseEntity<>(new MessageObject("Added price to exsiting property"),
+                            new HttpHeaders(), HttpStatus.CREATED);
+                } else {
+                    return new ResponseEntity<>(new MessageObject("Price not added because already a price for this date"),
+                            new HttpHeaders(), HttpStatus.ACCEPTED);
+                }
+            } else {
+                oldProperty.getPricehistory().add(newPrice);
                 propertyService.save(oldProperty);
                 return new ResponseEntity<>(new MessageObject("Added price to exsiting property"),
                         new HttpHeaders(), HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<>(new MessageObject("Price not added because already a price for this date"),
-                        new HttpHeaders(), HttpStatus.ACCEPTED);
             }
 
         } else if (propertyInDb == 0) {
@@ -75,14 +78,10 @@ public class PropertyController {
         if (propertyInDb == 0)
             return new ResponseEntity<>(null,
                     new HttpHeaders(), HttpStatus.NOT_FOUND);
-        else if (propertyInDb > 0){
-            System.out.println("latest price is:");
-            System.out.println(propertyService.getLatestPrice(p));
+        else if (propertyInDb > 0) {
             return new ResponseEntity<>(propertyService.getAllByExample(p),
                     new HttpHeaders(), HttpStatus.OK);
-        }
-
-        else
+        } else
             return new ResponseEntity<>(null,
                     new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
