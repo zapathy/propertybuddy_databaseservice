@@ -5,14 +5,10 @@ import com.propertybuddy.service.database.model.Price;
 import com.propertybuddy.service.database.model.Property;
 import com.propertybuddy.service.database.model.PropertyInput;
 import com.propertybuddy.service.database.service.PropertyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -22,10 +18,12 @@ import java.util.List;
 @RequestMapping("/properties")
 @CrossOrigin
 public class PropertyController {
-    @Autowired
+    private final
     PropertyService propertyService;
 
-    private Logger logger = LoggerFactory.getLogger(PropertyController.class);
+    public PropertyController(PropertyService propertyService) {
+        this.propertyService = propertyService;
+    }
 
     @DeleteMapping("")
     public ResponseEntity<MessageObject> deleteEverything() {
@@ -46,7 +44,7 @@ public class PropertyController {
                 if (!latestPrice.getPricehuf().equals(newPrice.getPricehuf())) {
                     oldProperty.getPricehistory().add(newPrice);
                     propertyService.save(oldProperty);
-                    return new ResponseEntity<>(new MessageObject("Added price to exsiting property"),
+                    return new ResponseEntity<>(new MessageObject("Added price to existing property"),
                             new HttpHeaders(), HttpStatus.CREATED);
                 } else {
                     return new ResponseEntity<>(new MessageObject("Price not added because already a price for this date"),
@@ -55,7 +53,7 @@ public class PropertyController {
             } else {
                 oldProperty.getPricehistory().add(newPrice);
                 propertyService.save(oldProperty);
-                return new ResponseEntity<>(new MessageObject("Added price to exsiting property"),
+                return new ResponseEntity<>(new MessageObject("Added price to existing property"),
                         new HttpHeaders(), HttpStatus.CREATED);
             }
 
