@@ -44,10 +44,10 @@ public class PropertyController {
                 if (!latestPrice.getPricehuf().equals(newPrice.getPricehuf())) {
                     oldProperty.getPricehistory().add(newPrice);
                     propertyService.save(oldProperty);
-                    return new ResponseEntity<>(new MessageObject("Added price to existing property"),
+                    return new ResponseEntity<>(new MessageObject("Added price because changed since last price"),
                             new HttpHeaders(), HttpStatus.CREATED);
                 } else {
-                    return new ResponseEntity<>(new MessageObject("Price not added because already a price for this date"),
+                    return new ResponseEntity<>(new MessageObject("Price not added because too close to latest price"),
                             new HttpHeaders(), HttpStatus.ACCEPTED);
                 }
             } else {
