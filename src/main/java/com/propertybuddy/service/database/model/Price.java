@@ -5,17 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Builder
+@Entity(name = "Price")
+@Table(name = "price")
 public class Price {
     public Price(PropertyInput input) {
         this.pricehuf = input.getPricehuf();
@@ -31,4 +30,10 @@ public class Price {
     private BigInteger priceeur;
 
     private LocalDateTime datetime;
+
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "property_id")
+    private Property property;
 }

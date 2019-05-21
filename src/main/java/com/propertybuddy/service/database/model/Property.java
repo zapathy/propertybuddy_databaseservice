@@ -12,8 +12,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Builder
+@Entity(name = "Property")
+@Table(name = "property")
 public class Property {
     public Property(PropertyInput input) {
         this.name = input.getName();
@@ -44,8 +45,16 @@ public class Property {
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.EAGER
+            fetch = FetchType.EAGER,
+            mappedBy = "property"
     )
     private List<Price> pricehistory = new ArrayList<>();
 
+    public void addPrice(Price price) {
+        pricehistory.add(price);
+        price.setProperty(this);
+    }
+
 }
+
+

@@ -42,7 +42,7 @@ public class PropertyController {
             long deltaTime = Math.abs(Duration.between(latestPrice.getDatetime(), LocalDateTime.now()).toHours());
             if (deltaTime <= 48) {
                 if (!latestPrice.getPricehuf().equals(newPrice.getPricehuf())) {
-                    oldProperty.getPricehistory().add(newPrice);
+                    oldProperty.addPrice(newPrice);
                     propertyService.save(oldProperty);
                     return new ResponseEntity<>(new MessageObject("Added price because changed since last price"),
                             new HttpHeaders(), HttpStatus.CREATED);
@@ -51,14 +51,14 @@ public class PropertyController {
                             new HttpHeaders(), HttpStatus.ACCEPTED);
                 }
             } else {
-                oldProperty.getPricehistory().add(newPrice);
+                oldProperty.addPrice(newPrice);
                 propertyService.save(oldProperty);
                 return new ResponseEntity<>(new MessageObject("Added price to existing property"),
                         new HttpHeaders(), HttpStatus.CREATED);
             }
 
         } else if (propertyInDb == 0) {
-            newProperty.getPricehistory().add(newPrice);
+            newProperty.addPrice(newPrice);
             propertyService.save(newProperty);
             return new ResponseEntity<>(new MessageObject("Added property successful"),
                     new HttpHeaders(), HttpStatus.CREATED);
