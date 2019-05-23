@@ -1,15 +1,14 @@
 package com.propertybuddy.service.database.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -48,6 +47,7 @@ public class Property {
             fetch = FetchType.EAGER,
             mappedBy = "property"
     )
+    @EqualsAndHashCode.Exclude
     private List<Price> pricehistory = new ArrayList<>();
 
     public void addPrice(Price price) {

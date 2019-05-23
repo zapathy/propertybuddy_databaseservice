@@ -1,5 +1,6 @@
 package com.propertybuddy.service.database.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class Price {
     @ManyToOne(
             fetch = FetchType.LAZY
     )
+    @JsonIgnore
     @JoinColumn(name = "property_id")
     private Property property;
 }
