@@ -13,6 +13,7 @@ import java.math.BigInteger;
 @Builder
 public class PropertyInput {
 
+    private Long id;
     private String name;
     private Integer district;
     private Integer bedrooms;

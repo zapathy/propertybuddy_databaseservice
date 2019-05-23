@@ -16,6 +16,7 @@ import java.util.List;
 @Table(name = "property")
 public class Property {
     public Property(PropertyInput input) {
+        this.id = input.getId();
         this.name = input.getName();
         this.district = input.getDistrict();
         this.bedrooms = input.getBedrooms();
