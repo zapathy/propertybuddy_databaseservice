@@ -43,7 +43,8 @@ public class PropertyService {
     public Price getLatestPrice(Property property) {
         List<Property> properties = getAllByExample(property);
         properties.forEach(o -> o.getPricehistory().sort(Comparator.comparing(Price::getDatetime)));
-        return properties.get(0).getPricehistory().get(0);
+        List<Price> pricelist = properties.get(0).getPricehistory();
+        return pricelist.get(pricelist.size()-1);
     }
 
     public List<Property> getAllByExample(Property p) {
